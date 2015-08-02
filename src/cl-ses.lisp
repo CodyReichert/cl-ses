@@ -55,10 +55,8 @@
                                                    :content-type "application/x-www-form-urlencoded"
                                                    :content request-data
                                                    :additional-headers sig-headers))))
-    (cond
-      ((= 200 status) t)
-      ((= 400 status) nil)
-      (t nil))))
+    (if (not (= 200 status))
+        nil t)))
 
 
 (defun prepare-sig-header (request-data aws-access-key aws-secret-key)
