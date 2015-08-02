@@ -48,18 +48,17 @@
   (format nil "~C~C" (code-char 13) (code-char 10)))
 
 (defun send-request (request-data aws-access-key aws-secret-key)
-  (let ((request-string (prepare-post-request-string request-data
-                                                     aws-access-key
-                                                     aws-secret-key))
-        (uri (concatenate 'string "https://" +ses-host+))
-        (sig-headers (prepare-sig-header request-data aws-access-key aws-secret-key)))
-   ;(format t "~A~%~%~%" request-string)
-   ;(setf drakma:*header-stream* *standard-output*)
-    (drakma:http-request uri
-                         :method :POST
-                         :content-type "application/x-www-form-urlencoded"
-                         :content request-data
-                         :additional-headers sig-headers)))
+  (let* ((uri (concatenate 'string "https://" +ses-host+))
+         (sig-headers (prepare-sig-header request-data aws-access-key aws-secret-key))
+         (status (nth-value 1 (drakma:http-request uri
+                                                   :method :POST
+                                                   :content-type "application/x-www-form-urlencoded"
+                                                   :content request-data
+                                                   :additional-headers sig-headers))))
+    (cond
+      ((= 200 status) t)
+      ((= 400 status) nil)
+      (t nil))))
 
 
 (defun prepare-sig-header (request-data aws-access-key aws-secret-key)
@@ -90,30 +89,6 @@
                           sig-list))
     sig-list))
 
-
-(defun prepare-post-request-string (request-data aws-access-key aws-secret-key)
-  (let* ((date-str (get-date-string))
-         (date-vec (string-to-vector date-str))
-         (key-vec (string-to-vector aws-secret-key))
-         (signature-str (base64-encode (hmac-sha1 key-vec date-vec))))
-    (format
-     nil
-     "POST / HTTP/1.1~A~
-     Host: ~A~A~
-     Content-Type: application/x-www-form-urlencoded~A~
-     Date: ~A~A~
-     Content-Length: ~D~A~
-     X-Amzn-Authorization: AWS3-HTTPS AWSAccessKeyId=~A, Algorithm=HmacSHA1, Signature=~A~A~
-     ~A~
-     ~A"
-     +newline+
-     +ses-host+ +newline+
-     +newline+
-     date-str +newline+
-     (length request-data) +newline+
-     aws-access-key signature-str +newline+
-     +newline+
-     request-data)))
 
 (defun get-date-string ()
   (multiple-value-bind (second minute hour date month year day)
