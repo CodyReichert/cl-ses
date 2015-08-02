@@ -1,0 +1,15 @@
+* Cl-Ses  - Send AWS SES Emails from Common Lisp
+
+** Usage
+
+** Dependencies
+
+** Installation
+
+** Author
+
++ Cody Reichert (codyreichert@gmail.com)
+
+** Copyright
+
+Copyright (c) 2015 Cody Reichert (codyreichert@gmail.com)
