@@ -1,10 +1,37 @@
-* Cl-Ses  - Send AWS SES Emails from Common Lisp
+* cl-ses - Send emails from Common Lisp with AWS's SES
+
+  cl-ses is a simple, low footprint, Common Lisp package for sending
+  email with AWS's SES.
 
 ** Usage
+   cl-ses exports one simple =send-email= function:
+
+   #+BEGIN_SRC lisp
+     (cl-ses:send-email :from "me@example.com"
+                        :to "you@example.com"
+                        :subject "Hello from CL-SES"
+                        :message "The body of the email message"
+                        :aws-access-key "XXXXXX"
+                        :aws-secret-key "XXXXXXXXXXX")
+   #+END_SRC
+
+   =send-email= returns =T= if the status was 200 (OK), and =NIL=
+   otherwise. In the future I'll hopefully have implemented better
+   error reporting.
+
 
 ** Dependencies
+   - [[http://weitz.de/drakma/][Drakma]] is the only external dependency
 
 ** Installation
+   Right now this is only on GitHub, but if you use quicklisp it's
+   still easy to include in a project:
+
+   =git clone git@github.com:CodyReichert/cl-ses ~/quicklisp/local-projects=
+
+   then you can:
+
+   =(ql:quickload :cl-ses)=
 
 ** Author
 
