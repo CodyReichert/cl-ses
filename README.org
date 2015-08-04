@@ -19,6 +19,31 @@
    otherwise. In the future I'll hopefully have implemented better
    error reporting.
 
+*** Setting the Content-Type
+    There is support for setting the email's =Content-Type=. I've
+    tested with =text/plan= and =text/html=, which both work and I'm
+    sure others do as well:
+
+   #+BEGIN_SRC lisp
+     (cl-ses:send-email ...
+                        ...
+                        :content-type "text/html"
+                        ...)
+   #+END_SRC
+
+    The content-type key is optional, and defaults to =text/plain=.
+
+*** Using a name in the from field
+    When sending emails, you can set a name to be shown in the =from=
+    parameter. This is not AWS specific, but I believe most modern
+    email clients will parse it OK:
+
+   #+BEGIN_SRC lisp
+     (cl-ses:send-email :from "My Name <me@example.com>"
+                        ...
+                        ...)
+   #+END_SRC
+
 
 ** Dependencies
    - [[http://weitz.de/drakma/][Drakma]] is the only external dependency
