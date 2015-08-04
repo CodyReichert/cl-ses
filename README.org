@@ -1,10 +1,14 @@
-* cl-ses - Send emails from Common Lisp with AWS's SES
+#+TITLE: cl-ses
+#+Author: Cody Reichert
+#+Email: codyreichert@gmail.com
+#+DESCRIPTION: Send emails from Common Lisp with AWS's SES
 
-  cl-ses is a simple, low footprint, Common Lisp package for sending
-  email with AWS's SES.
 
-** Usage
-   cl-ses exports one simple =send-email= function:
+  cl-ses is a Common Lisp package for sending email with AWS's SES.
+
+
+* Usage
+   cl-ses exports the =send-email= function:
 
    #+BEGIN_SRC lisp
      (cl-ses:send-email :from "me@example.com"
@@ -19,10 +23,10 @@
    otherwise. In the future I'll hopefully have implemented better
    error reporting.
 
-*** Setting the Content-Type
+** Setting the Content-Type
     There is support for setting the email's =Content-Type=. I've
-    tested with =text/plan= and =text/html=, which both work and I'm
-    sure others do as well:
+    tested with =text/plain= and =text/html=, but others should work
+    as well:
 
    #+BEGIN_SRC lisp
      (cl-ses:send-email ...
@@ -33,10 +37,20 @@
 
     The content-type key is optional, and defaults to =text/plain=.
 
-*** Using a name in the from field
-    When sending emails, you can set a name to be shown in the =from=
-    parameter. This is not AWS specific, but I believe most modern
-    email clients will parse it OK:
+** Mulitple Recipients
+   You can specify multiple recipients by using a comma separated list
+   of email addresses:
+
+   #+BEGIN_SRC lisp
+     (cl-ses:send-email ...
+                        :to "first@example.com,second@example.com"
+                        ...
+                        ...)
+   #+END_SRC
+
+** Setting a name in the from field
+   This isn't really AWS Specific, but you can set a "Name" in the
+   =from= parameter (you still need an email address):
 
    #+BEGIN_SRC lisp
      (cl-ses:send-email :from "My Name <me@example.com>"
@@ -44,11 +58,10 @@
                         ...)
    #+END_SRC
 
-
-** Dependencies
+* Dependencies
    - [[http://weitz.de/drakma/][Drakma]] is the only external dependency
 
-** Installation
+* Installation
    Right now this is only on GitHub, but if you use quicklisp it's
    still easy to include in a project:
 
@@ -58,10 +71,10 @@
 
    =(ql:quickload :cl-ses)=
 
-** Author
+* Author
 
 + Cody Reichert (codyreichert@gmail.com)
 
-** Copyright
+* Copyright
 
 Copyright (c) 2015 Cody Reichert (codyreichert@gmail.com)
