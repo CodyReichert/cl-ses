@@ -8,8 +8,8 @@
 ;; SEND EMAIL
 ;;-----------------------------------------------------------------------------
 
-(defun send-email (&key from to subject message aws-access-key aws-secret-key)
-  (let* ((raw-message (make-raw-message from to subject message))
+(defun send-email (&key from to subject message (content-type "text/plain") aws-access-key aws-secret-key)
+  (let* ((raw-message (make-raw-message from to subject content-type message))
          (raw-message-encoded (base64-encode (string-to-utf8vector raw-message)
                                              :line-separated t))
          (request (concatenate 'string "Action=SendRawEmail&RawMessage.Data="
@@ -21,15 +21,15 @@
     "From: ~A~%~
    To: ~A~%~
    Subject: ~A~%~
-   Content-Type: text/plain; charset=utf-8~%~
+   Content-Type: ~A; charset=utf-8~%~
    Content-Transfer-Encoding: quoted-printable~%~
    ~%~
    ~A~%")
 
-(defun make-raw-message (from to subject message)
+(defun make-raw-message (from to subject content-type message)
   (let ((subj (subject-as-base64 subject))
         (msg (escape-as-quoted-printable message)))
-    (format nil +email-template+ from to subj msg)))
+    (format nil +email-template+ from to subj content-type msg)))
 
 (defun subject-as-base64 (subject)
   (concatenate 'string
