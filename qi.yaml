@@ -1,0 +1,6 @@
+name: cl-ses
+author: Cody Reichert <codyreichert@gmail.com>
+description: Send emails from Common Lisp with AWS SES.
+
+packages:
+  - name: drakma

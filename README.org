@@ -62,14 +62,26 @@
    - [[http://weitz.de/drakma/][Drakma]] is the only external dependency
 
 * Installation
-   Right now this is only on GitHub, but if you use quicklisp it's
-   still easy to include in a project:
+*** With Qi
+    Add it another system's qi.yaml, or load it directly:
 
-   =git clone git@github.com:CodyReichert/cl-ses ~/quicklisp/local-projects=
+    #+BEGIN_SRC lisp
+      (load "cl-ses.asd")
+      (qi:install :cl-ses)
+    #+END_SRC
 
-   then you can:
+*** With Quicklisp
+    Install to local-projects, then it's quickloadable:
 
-   =(ql:quickload :cl-ses)=
+    #+BEGIN_SRC lisp
+      git clone git@github.com:CodyReichert/cl-ses ~/quicklisp/local-projects=
+    #+END_SRC
+
+    #+BEGIN_SRC lisp
+      (ql:quickload :cl-ses)
+    #+END_SRC
+
+
 
 * Author
 
