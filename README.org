@@ -73,8 +73,8 @@
 *** With Quicklisp
     Install to local-projects, then it's quickloadable:
 
-    #+BEGIN_SRC lisp
-      git clone git@github.com:CodyReichert/cl-ses ~/quicklisp/local-projects=
+    #+BEGIN_SRC sh
+      git clone git@github.com:CodyReichert/cl-ses ~/quicklisp/local-projects
     #+END_SRC
 
     #+BEGIN_SRC lisp
